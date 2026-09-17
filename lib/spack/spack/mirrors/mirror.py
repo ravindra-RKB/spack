@@ -55,6 +55,8 @@ def _url_or_path_to_url(url_or_path: str) -> str:
     """For simplicity we allow mirror URLs in config files to be local, relative paths.
     This helper function takes care of distinguishing between URLs and paths, and
     canonicalizes paths before transforming them into file:// URLs."""
+    url_or_path = spack.config.substitute_path_variables(url_or_path)
+
     # Is it a supported URL already? Then don't do path-related canonicalization.
     parsed = urllib.parse.urlparse(url_or_path)
     if parsed.scheme in supported_url_schemes:
